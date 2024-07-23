@@ -18,7 +18,7 @@ public:
 
 	USaveGameData();
 
-	/** Amount of points that need to be save*/
+	/** Amount of points that need to be save */
 	UPROPERTY(VisibleAnywhere)
 	int32 Points;
 	

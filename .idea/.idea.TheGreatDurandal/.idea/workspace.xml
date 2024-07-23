@@ -7,20 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="010b620c-59d3-4c0d-8940-d05dfa2fab18" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/ThirdPerson/Blueprints/BP_DurandalGameInstance.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/ThirdPerson/Blueprints/BP_TheGreatDurandalGameMode.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Platforms/HoloLens/Config/HoloLensEngine.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/SaveLoadSystem/SaveGameData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/SaveLoadSystem/SaveGameData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/DurandalGameInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/DurandalGameInstance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/DurandalGameInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/DurandalGameInstance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/TheGreatDurandalCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/TheGreatDurandalCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/TheGreatDurandalCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/TheGreatDurandalCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TheGreatDurandal.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/TheGreatDurandal.uproject" afterDir="false" />
-    </list>
+    <list default="true" id="010b620c-59d3-4c0d-8940-d05dfa2fab18" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
