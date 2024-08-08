@@ -9,7 +9,7 @@
 
 
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class THEGREATDURANDAL_API UDamageComponent : public UActorComponent
 {
 	GENERATED_BODY()
