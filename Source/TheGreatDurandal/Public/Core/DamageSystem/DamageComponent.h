@@ -18,15 +18,17 @@ public:
 	// Sets default values for this component's properties
 	UDamageComponent();
 
+	//First iteration on this function that just broadcast delegate
+	//TODO: This logic in damage system
+	UFUNCTION(BlueprintCallable)
+	void CauseDamage();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
-protected:
+	UPROPERTY(BlueprintReadOnly)
+	float Damage;
 	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Damage")
 	EDamageType DamageType = EDamageType::NonDamageType;

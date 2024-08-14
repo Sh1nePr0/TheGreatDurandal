@@ -8,6 +8,9 @@
 #include "TheGreatDurandalCharacter.generated.h"
 
 
+
+class UHealthComponent;
+
 UCLASS(config=Game)
 class ATheGreatDurandalCharacter : public ACharacter
 {
@@ -45,6 +48,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 pointsToGive;
 
+
 public:
 	ATheGreatDurandalCharacter();
 	
@@ -70,5 +74,13 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	/** Returns HealthComponent subobject **/
+	FORCEINLINE class UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
+protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<UHealthComponent> HealthComponent = nullptr;
+	
 };
 

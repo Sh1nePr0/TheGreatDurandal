@@ -3,15 +3,20 @@
 
 #include "Core/HealthSystem/HealthComponent.h"
 
+#include "Core/Character/TheGreatDurandalCharacter.h"
+
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
-	// ...
+	DefaultHealth = 100.0f;
+	Health = DefaultHealth;
+
+	OnTakeDamage.AddDynamic(this, &UHealthComponent::TakeDamage);
 }
 
 
@@ -20,17 +25,18 @@ void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
 	
 }
 
-
-// Called every frame
-void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                     FActorComponentTickFunction* ThisTickFunction)
+void UHealthComponent::TakeDamage(float Damage)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if(Damage <= 0)
+	{
+		return;
+	}
 
-	// ...
+	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
+		
 }
+
 
