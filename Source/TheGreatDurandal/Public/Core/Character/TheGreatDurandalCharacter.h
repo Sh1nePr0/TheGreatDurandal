@@ -38,6 +38,14 @@ class ATheGreatDurandalCharacter : public ACharacter
 	class UInputAction* LookAction;
 
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void CheckConditionToSaveGame();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
+	int32 pointsToGive;
+
+public:
 	ATheGreatDurandalCharacter();
 	
 

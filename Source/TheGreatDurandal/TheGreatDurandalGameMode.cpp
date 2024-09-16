@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "TheGreatDurandalGameMode.h"
-#include "TheGreatDurandalCharacter.h"
+#include "Core/Character/TheGreatDurandalCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 ATheGreatDurandalGameMode::ATheGreatDurandalGameMode()

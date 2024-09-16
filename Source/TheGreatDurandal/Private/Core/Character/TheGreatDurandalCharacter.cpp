@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "TheGreatDurandalCharacter.h"
+#include "Core/Character/TheGreatDurandalCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Core/DurandalGameInstance.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -47,6 +48,8 @@ ATheGreatDurandalCharacter::ATheGreatDurandalCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+
+	pointsToGive = 20;
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -124,6 +127,15 @@ void ATheGreatDurandalCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void ATheGreatDurandalCharacter::CheckConditionToSaveGame()
+{
+	if(auto durandalGameInstance = Cast<UDurandalGameInstance>(GetGameInstance()))
+	{
+		durandalGameInstance->totalPoints += pointsToGive;
 
+		//Save game
+		durandalGameInstance->SaveGame();
+	}
+}
 
 
