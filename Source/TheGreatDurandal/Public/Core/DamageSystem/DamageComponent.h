@@ -26,6 +26,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION(BlueprintCallable)
+	void CauseDamage();
 protected:
 	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Damage")
@@ -33,5 +36,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Damage")
 	EDamageFrequency DamageFrequency = EDamageFrequency::NonDamageFrequency;
-	
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Damage")
+	float Damage;
 };

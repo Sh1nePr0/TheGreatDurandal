@@ -1,0 +1,149 @@
+Index: Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Copyright Epic Games, Inc. All Rights Reserved.\r\n\r\n#pragma once\r\n\r\n#include \"CoreMinimal.h\"\r\n#include \"GameFramework/Character.h\"\r\n#include \"InputActionValue.h\"\r\n#include \"TheGreatDurandalCharacter.generated.h\"\r\n\r\n\r\n\r\nclass UHealthComponent;\r\n\r\nUCLASS(config=Game)\r\nclass ATheGreatDurandalCharacter : public ACharacter\r\n{\r\n\tGENERATED_BODY()\r\n\r\n\t/** Camera boom positioning the camera behind the character */\r\n\tUPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = \"true\"))\r\n\tclass USpringArmComponent* CameraBoom;\r\n\r\n\t/** Follow camera */\r\n\tUPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = \"true\"))\r\n\tclass UCameraComponent* FollowCamera;\r\n\t\r\n\t/** MappingContext */\r\n\tUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = \"true\"))\r\n\tclass UInputMappingContext* DefaultMappingContext;\r\n\r\n\t/** Jump Input Action */\r\n\tUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = \"true\"))\r\n\tclass UInputAction* JumpAction;\r\n\r\n\t/** Move Input Action */\r\n\tUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = \"true\"))\r\n\tclass UInputAction* MoveAction;\r\n\r\n\t/** Look Input Action */\r\n\tUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = \"true\"))\r\n\tclass UInputAction* LookAction;\r\n\r\npublic:\r\n\r\n\tUFUNCTION(BlueprintCallable)\r\n\tvoid CheckConditionToSaveGame();\r\n\t\r\n\tUPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Stats\")\r\n\tint32 pointsToGive;\r\n\r\n\r\npublic:\r\n\tATheGreatDurandalCharacter();\r\n\t\r\n\r\nprotected:\r\n\r\n\t/** Called for movement input */\r\n\tvoid Move(const FInputActionValue& Value);\r\n\r\n\t/** Called for looking input */\r\n\tvoid Look(const FInputActionValue& Value);\r\n\t\t\t\r\n\r\nprotected:\r\n\t// APawn interface\r\n\tvirtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;\r\n\t\r\n\t// To add mapping context\r\n\tvirtual void BeginPlay();\r\n\r\npublic:\r\n\t/** Returns CameraBoom subobject **/\r\n\tFORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }\r\n\t/** Returns FollowCamera subobject **/\r\n\tFORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }\r\n\t/** Returns HealthComponent subobject **/\r\n\tFORCEINLINE class UHealthComponent* GetHealthComponent() const { return HealthComponent; }\r\n\r\nprotected:\r\n\r\n\tUPROPERTY(EditAnywhere, BlueprintReadOnly, Category=\"Components\")\r\n\tTObjectPtr<UHealthComponent> HealthComponent = nullptr;\r\n\t\r\n};\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h b/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h
+--- a/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h	(revision 40acf7e03ac2d2b5b431e3c92ea3a80bcb2b46fc)
++++ b/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h	(date 1726487910869)
+@@ -5,6 +5,7 @@
+ #include "CoreMinimal.h"
+ #include "GameFramework/Character.h"
+ #include "InputActionValue.h"
++
+ #include "TheGreatDurandalCharacter.generated.h"
+ 
+ 
+@@ -80,7 +81,7 @@
+ protected:
+ 
+ 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Components")
+-	TObjectPtr<UHealthComponent> HealthComponent = nullptr;
++	UHealthComponent* HealthComponent = nullptr;
+ 	
+ };
+ 
+Index: Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Fill out your copyright notice in the Description page of Project Settings.\r\n\r\n\r\n#include \"Core/DamageSystem/DamageComponent.h\"\r\n\r\n#include \"Core/Character/TheGreatDurandalCharacter.h\"\r\n#include \"Core/HealthSystem/HealthComponent.h\"\r\n\r\n\r\n// Sets default values for this component's properties\r\nUDamageComponent::UDamageComponent()\r\n{\r\n\t// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features\r\n\t// off to improve performance if you don't need them.\r\n\tPrimaryComponentTick.bCanEverTick = false;\r\n\r\n\tDamage = 25.0f;\r\n}\r\n\r\nvoid UDamageComponent::CauseDamage()\r\n{\r\n\tATheGreatDurandalCharacter* Character = Cast<ATheGreatDurandalCharacter>(GetOwner());\r\n\tif(Character != nullptr)\r\n\t{\r\n\t\tCharacter->GetHealthComponent()->OnTakeDamage.Broadcast(Damage);\r\n\t}\r\n}\r\n\r\n\r\n// Called when the game starts\r\nvoid UDamageComponent::BeginPlay()\r\n{\r\n\tSuper::BeginPlay();\r\n\t\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp b/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp
+--- a/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp	(revision 40acf7e03ac2d2b5b431e3c92ea3a80bcb2b46fc)
++++ b/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp	(date 1726488432905)
+@@ -2,7 +2,6 @@
+ 
+ 
+ #include "Core/DamageSystem/DamageComponent.h"
+-
+ #include "Core/Character/TheGreatDurandalCharacter.h"
+ #include "Core/HealthSystem/HealthComponent.h"
+ 
+Index: Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Fill out your copyright notice in the Description page of Project Settings.\r\n\r\n\r\n#include \"Core/HealthSystem/HealthComponent.h\"\r\n\r\n#include \"Core/Character/TheGreatDurandalCharacter.h\"\r\n\r\n\r\n// Sets default values for this component's properties\r\nUHealthComponent::UHealthComponent()\r\n{\r\n\t// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features\r\n\t// off to improve performance if you don't need them.\r\n\tPrimaryComponentTick.bCanEverTick = false;\r\n\r\n\tDefaultHealth = 100.0f;\r\n\tHealth = DefaultHealth;\r\n\r\n\tOnTakeDamage.AddDynamic(this, &UHealthComponent::TakeDamage);\r\n}\r\n\r\n\r\n// Called when the game starts\r\nvoid UHealthComponent::BeginPlay()\r\n{\r\n\tSuper::BeginPlay();\r\n\r\n\t\r\n}\r\n\r\nvoid UHealthComponent::TakeDamage(float Damage)\r\n{\r\n\tif(Damage <= 0)\r\n\t{\r\n\t\treturn;\r\n\t}\r\n\r\n\tHealth = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);\r\n\t\t\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp b/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp
+--- a/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp	(revision 40acf7e03ac2d2b5b431e3c92ea3a80bcb2b46fc)
++++ b/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp	(date 1726487716541)
+@@ -2,7 +2,6 @@
+ 
+ 
+ #include "Core/HealthSystem/HealthComponent.h"
+-
+ #include "Core/Character/TheGreatDurandalCharacter.h"
+ 
+ 
+Index: Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Fill out your copyright notice in the Description page of Project Settings.\r\n\r\n#pragma once\r\n\r\n#include \"CoreMinimal.h\"\r\n#include \"Components/ActorComponent.h\"\r\n#include \"HealthComponent.generated.h\"\r\n\r\nDECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTakeDamage, float, Damage);\r\n\r\nUCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))\r\nclass THEGREATDURANDAL_API UHealthComponent : public UActorComponent\r\n{\r\n\tGENERATED_BODY()\r\n\r\npublic:\r\n\t// Sets default values for this component's properties\r\n\tUHealthComponent();\r\n\r\n\tFOnTakeDamage OnTakeDamage;\r\n\r\nprotected:\r\n\t// Called when the game starts\r\n\tvirtual void BeginPlay() override;\r\n\t\r\n\tUPROPERTY(EditAnywhere, BlueprintReadWrite, Category=\"Health\")\r\n\tfloat DefaultHealth;\r\n\r\n\tUPROPERTY(BlueprintReadOnly)\r\n\tfloat Health;\r\n\r\n\t//TODO: Maybe this logic going into health system\r\n\tUFUNCTION()\r\n\tvoid TakeDamage(float Damage);\r\n\t\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h b/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h
+--- a/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h	(revision 40acf7e03ac2d2b5b431e3c92ea3a80bcb2b46fc)
++++ b/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h	(date 1726488053061)
+@@ -17,7 +17,9 @@
+ 	// Sets default values for this component's properties
+ 	UHealthComponent();
+ 
+-	FOnTakeDamage OnTakeDamage;
++	//TODO: Maybe this logic going into health system
++	UFUNCTION()
++	void TakeDamage(float Damage);
+ 
+ protected:
+ 	// Called when the game starts
+@@ -29,8 +31,8 @@
+ 	UPROPERTY(BlueprintReadOnly)
+ 	float Health;
+ 
+-	//TODO: Maybe this logic going into health system
+-	UFUNCTION()
+-	void TakeDamage(float Damage);
++public:
++
++	FOnTakeDamage OnTakeDamage;
+ 	
+ };
+Index: .idea/.idea.TheGreatDurandal/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoGeneratedRunConfigurationManager\">\r\n    <projectFile>Intermediate/ProjectFiles/TheGreatDurandal.vcxproj</projectFile>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"010b620c-59d3-4c0d-8940-d05dfa2fab18\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_02_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_02__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_03_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_03__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08_[Changes]1/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08__Changes_1.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_26__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_26__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Sh1nePr0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Sh1nePr0/TheGreatDurandal.git&quot;,\r\n    &quot;accountId&quot;: &quot;0b95be1d-50ad-4c55-9d86-5ed16cc62603&quot;\r\n  }\r\n}</component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"mock:///dummy.cpp\" root0=\"SKIP_HIGHLIGHTING\" />\r\n    <setting file=\"mock:///dummy.cpp\" root0=\"SKIP_HIGHLIGHTING\" />\r\n  </component>\r\n  <component name=\"MetaFilesCheckinStateConfiguration\" checkMetaFiles=\"true\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 2\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ihaXxdQKz7ydFv33t0jeEg9GVW\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"C++ Project.TheGreatDurandal.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"feature/HealthAndDamageSystem\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"reference.settingsdialog.IDE.editor.colors\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"rider.external.source.directories\": [\r\n      \"C:\\\\Users\\\\User\\\\AppData\\\\Roaming\\\\JetBrains\\\\Rider2024.1\\\\resharper-host\\\\DecompilerCache\",\r\n      \"C:\\\\Users\\\\User\\\\AppData\\\\Roaming\\\\JetBrains\\\\Rider2024.1\\\\resharper-host\\\\SourcesCache\",\r\n      \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Symbols\\\\src\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"TheGreatDurandal\" type=\"CppProject\" factoryName=\"C++ Project\">\r\n      <configuration_1>\r\n        <option name=\"CONFIGURATION\" value=\"Development Editor\" />\r\n        <option name=\"PLATFORM\" value=\"Win64\" />\r\n        <option name=\"PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/Intermediate/ProjectFiles/TheGreatDurandal.vcxproj\" />\r\n        <option name=\"CURRENT_LAUNCH_PROFILE\" value=\"Local\" />\r\n        <option name=\"EXE_PATH\" value=\"$(LocalDebuggerCommand)\" />\r\n        <option name=\"PROGRAM_PARAMETERS\" value=\"$(LocalDebuggerCommandArguments)\" />\r\n        <option name=\"WORKING_DIRECTORY\" value=\"$(LocalDebuggerWorkingDirectory)\" />\r\n        <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\r\n        <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n        <option name=\"TERMINAL_INTERACTION_BEHAVIOR\" value=\"AUTO_DETECT\" />\r\n      </configuration_1>\r\n      <configuration_2>\r\n        <option name=\"CONFIGURATION\" value=\"DebugGame Editor\" />\r\n        <option name=\"PLATFORM\" value=\"Win64\" />\r\n        <option name=\"PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/Intermediate/ProjectFiles/TheGreatDurandal.vcxproj\" />\r\n        <option name=\"CURRENT_LAUNCH_PROFILE\" value=\"Local\" />\r\n        <option name=\"EXE_PATH\" value=\"$(LocalDebuggerCommand)\" />\r\n        <option name=\"PROGRAM_PARAMETERS\" value=\"$(LocalDebuggerCommandArguments)\" />\r\n        <option name=\"WORKING_DIRECTORY\" value=\"$(LocalDebuggerWorkingDirectory)\" />\r\n        <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\r\n        <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n        <option name=\"TERMINAL_INTERACTION_BEHAVIOR\" value=\"AUTO_DETECT\" />\r\n      </configuration_2>\r\n      <configuration_3>\r\n        <option name=\"CONFIGURATION\" value=\"Shipping\" />\r\n        <option name=\"PLATFORM\" value=\"Win64\" />\r\n        <option name=\"PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/Intermediate/ProjectFiles/TheGreatDurandal.vcxproj\" />\r\n        <option name=\"CURRENT_LAUNCH_PROFILE\" value=\"Local\" />\r\n        <option name=\"EXE_PATH\" value=\"$(LocalDebuggerCommand)\" />\r\n        <option name=\"PROGRAM_PARAMETERS\" value=\"$(LocalDebuggerCommandArguments)\" />\r\n        <option name=\"WORKING_DIRECTORY\" value=\"$(LocalDebuggerWorkingDirectory)\" />\r\n        <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\r\n        <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n        <option name=\"TERMINAL_INTERACTION_BEHAVIOR\" value=\"AUTO_DETECT\" />\r\n      </configuration_3>\r\n      <configuration_4>\r\n        <option name=\"CONFIGURATION\" value=\"DebugGame\" />\r\n        <option name=\"PLATFORM\" value=\"Win64\" />\r\n        <option name=\"PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/Intermediate/ProjectFiles/TheGreatDurandal.vcxproj\" />\r\n        <option name=\"CURRENT_LAUNCH_PROFILE\" value=\"Local\" />\r\n        <option name=\"EXE_PATH\" value=\"$(LocalDebuggerCommand)\" />\r\n        <option name=\"PROGRAM_PARAMETERS\" value=\"$(LocalDebuggerCommandArguments)\" />\r\n        <option name=\"WORKING_DIRECTORY\" value=\"$(LocalDebuggerWorkingDirectory)\" />\r\n        <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\r\n        <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n        <option name=\"TERMINAL_INTERACTION_BEHAVIOR\" value=\"AUTO_DETECT\" />\r\n      </configuration_4>\r\n      <configuration_5>\r\n        <option name=\"CONFIGURATION\" value=\"Development\" />\r\n        <option name=\"PLATFORM\" value=\"Win64\" />\r\n        <option name=\"PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/Intermediate/ProjectFiles/TheGreatDurandal.vcxproj\" />\r\n        <option name=\"CURRENT_LAUNCH_PROFILE\" value=\"Local\" />\r\n        <option name=\"EXE_PATH\" value=\"$(LocalDebuggerCommand)\" />\r\n        <option name=\"PROGRAM_PARAMETERS\" value=\"$(LocalDebuggerCommandArguments)\" />\r\n        <option name=\"WORKING_DIRECTORY\" value=\"$(LocalDebuggerWorkingDirectory)\" />\r\n        <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\r\n        <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n        <option name=\"TERMINAL_INTERACTION_BEHAVIOR\" value=\"AUTO_DETECT\" />\r\n      </configuration_5>\r\n      <option name=\"DEFAULT_PROJECT_PATH\" value=\"$PROJECT_DIR$/Intermediate/ProjectFiles/TheGreatDurandal.vcxproj\" />\r\n      <option name=\"AUTO_SELECT_PRIORITY\" value=\"10010\" />\r\n      <method v=\"2\">\r\n        <option name=\"Build\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"010b620c-59d3-4c0d-8940-d05dfa2fab18\" name=\"Changes\" comment=\"\" />\r\n      <created>1719945305453</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1719945305453</updated>\r\n      <workItem from=\"1719945307446\" duration=\"455000\" />\r\n      <workItem from=\"1721388357640\" duration=\"755000\" />\r\n      <workItem from=\"1721390648387\" duration=\"199000\" />\r\n      <workItem from=\"1721392297494\" duration=\"481000\" />\r\n      <workItem from=\"1721415776735\" duration=\"755000\" />\r\n      <workItem from=\"1721419509627\" duration=\"415000\" />\r\n      <workItem from=\"1721419998175\" duration=\"54000\" />\r\n      <workItem from=\"1721420318963\" duration=\"5851000\" />\r\n      <workItem from=\"1723137867549\" duration=\"70000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Create game instance class\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1721392675740</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1721392675740</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"UnityCheckinConfiguration\" checkUnsavedScenes=\"true\" />\r\n  <component name=\"UnityProjectConfiguration\" hasMinimizedUI=\"false\" />\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\r\n    <MESSAGE value=\"Create game instance class\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Create game instance class\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.TheGreatDurandal/.idea/workspace.xml b/.idea/.idea.TheGreatDurandal/.idea/workspace.xml
+--- a/.idea/.idea.TheGreatDurandal/.idea/workspace.xml	(revision 40acf7e03ac2d2b5b431e3c92ea3a80bcb2b46fc)
++++ b/.idea/.idea.TheGreatDurandal/.idea/workspace.xml	(date 1726489157779)
+@@ -8,16 +8,13 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="010b620c-59d3-4c0d-8940-d05dfa2fab18" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_02_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_02__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_03_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_03__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08_[Changes]1/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08__Changes_1.xml" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_26__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_27__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_27__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -78,9 +75,9 @@
+   },
+   "keyToStringList": {
+     "rider.external.source.directories": [
+-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+-      "C:\\Users\\User\\AppData\\Local\\Symbols\\src"
++      "C:\\Users\\fedor\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
++      "C:\\Users\\fedor\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
++      "C:\\Users\\fedor\\AppData\\Local\\Symbols\\src"
+     ]
+   }
+ }]]></component>
+@@ -170,6 +167,7 @@
+       <workItem from="1721419998175" duration="54000" />
+       <workItem from="1721420318963" duration="5851000" />
+       <workItem from="1723137867549" duration="70000" />
++      <workItem from="1726487110237" duration="2035000" />
+     </task>
+     <task id="LOCAL-00001" summary="Create game instance class">
+       <option name="closed" value="true" />

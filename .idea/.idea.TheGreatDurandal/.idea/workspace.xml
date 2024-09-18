@@ -8,16 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="010b620c-59d3-4c0d-8940-d05dfa2fab18" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_02_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_02__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_03_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_03__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_07_2024_19_08__Changes_1.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/NPC/BaseNPC.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/NPC/BaseNPC.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_26__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_27__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/shelf/Uncommitted_changes_before_Update_at_23_07_2024_23_27__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheGreatDurandal/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Character/BP_ThirdPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Character/BP_ThirdPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/DamageSystem/DamageComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Private/Core/HealthSystem/HealthComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/Character/TheGreatDurandalCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/DamageSystem/DamageComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/DamageSystem/DamageComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TheGreatDurandal/Public/Core/HealthSystem/HealthComponent.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +67,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "C++ Project.TheGreatDurandal.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/HealthAndDamageSystem",
+    "git-widget-placeholder": "BaseNPC",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -78,9 +79,9 @@
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\User\\AppData\\Local\\Symbols\\src"
+      "C:\\Users\\fedor\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\fedor\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\fedor\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
@@ -170,6 +171,8 @@
       <workItem from="1721419998175" duration="54000" />
       <workItem from="1721420318963" duration="5851000" />
       <workItem from="1723137867549" duration="70000" />
+      <workItem from="1726487110237" duration="2035000" />
+      <workItem from="1726494745542" duration="1455000" />
     </task>
     <task id="LOCAL-00001" summary="Create game instance class">
       <option name="closed" value="true" />
